@@ -1,8 +1,40 @@
 import { createBrowserRouter } from "react-router";
+import RootLayouts from "../layouts/RootLayouts";
+import Home from "../pages/Home/Home/Home";
+import Coverage from "../pages/coverage/Coverage";
+import AuthLayouts from "../layouts/AuthLayouts";
+import Login from "../pages/Auth/Login/Login";
+import Register from "../pages/Auth/Register/Register";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello World</div>,
+    Component: RootLayouts,
+    children: [
+       {
+        index: true,
+        Component: Home
+       },
+       {
+        path: '/coverage',
+        Component: Coverage,
+        loader: () => fetch('/warehouses.json').then(res => res.json())
+
+       }
+    ]
   },
+  {
+    path: '/',
+    Component: AuthLayouts,
+    children: [
+      {
+        path: 'login',
+        Component: Login
+      },
+      {
+        path: 'register',
+        Component: Register
+      }
+    ]
+  }
 ]);
