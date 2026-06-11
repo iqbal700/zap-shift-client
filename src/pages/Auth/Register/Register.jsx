@@ -1,18 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
+import { Link } from 'react-router';
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 const Register = () => {
 
     const {register, handleSubmit, formState :{ errors}} = useForm();
 
-    const {registerUser, signInUser} = useAuth();
+    const {registerUser} = useAuth();
 
     const handleRegistration = (data) => {
             console.log(data);
             registerUser(data.email, data.password)
              .then(res => {
-               return console.log(res)
+               return console.log(res.user)
              })
              .catch(error => {
                 console.log(error)
@@ -21,7 +23,7 @@ const Register = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(handleRegistration)} >
+            <form className='card-body' onSubmit={handleSubmit(handleRegistration)} >
                  <fieldset className="fieldset">
                     <label className="label">Email</label>
                     <input type="email" {...register('email', {required: true})} className="input" placeholder="Email" />
@@ -32,15 +34,18 @@ const Register = () => {
 
                         {/* password  */}
                     <label className="label">Password</label>
-                    <input type="password"
+                    <input
+                        type="password"
+                        className="input"
+                        placeholder="Password"
                      {...register('password',
                          {  required: true,
                              minLength: 6,
                              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/
 
-                     })
+                       })}
                 
-                } className="input" placeholder="Password" />
+                  />
 
                     {
                         errors.password ?. type === 'required' && <p className='text-red-600'>password is requird</p>
@@ -51,11 +56,17 @@ const Register = () => {
                     }
 
                     <div><a className="link link-hover">Forgot password?</a></div>
-                    <button className="btn btn-neutral mt-4">Login</button>
+                    <button className="btn btn-neutral mt-4">Register</button>
                   </fieldset>
+                   <p> already have an account  <Link to='/login' className='text-blue-600 font-bold' > login </Link>  </p>
             </form>
+            <SocialLogin></SocialLogin>
         </div>
     );
 };
 
 export default Register;
+
+
+
+        
