@@ -1,14 +1,25 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAuth from '../../hooks/useAuth';
 
 const SendParcel = () => {
-    const { register, handleSubmit, watch, control, formState: { errors } } = useForm({
+    const { 
+        register, 
+        handleSubmit,
+         watch, 
+          formState: { errors }
+        } = useForm({
         defaultValues: {
             parcelType: 'Document'
         }
     });
+
+    const axiosSecure = useAxiosSecure();
+    const {user} = useAuth();
+    const navigate = useNavigate();
 
     const serviceCenters = useLoaderData();
     const senderRegion = watch('senderRegion');
@@ -50,6 +61,7 @@ const SendParcel = () => {
             }
         }
               console.log('delivery charge',cost);
+              data.cost = cost;
 
             // ==-== confirmation message before finale procced ==-== 
 
@@ -62,12 +74,31 @@ const SendParcel = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: " agree!"
             }).then((result) => {
-            if (result.isConfirmed) Swal.fire({
-                title: "successfull!",
-                text: "Your products confirmed.",
-                icon: "success"
-            });
-            });
+            if (result.isConfirmed) {
+
+
+                 axiosSecure.post('/parcels', data) 
+                  .then( res => {
+                    console.log( 'after',res.data);
+                    if(res.data.insertedId) {
+                         navigate('/dashboard/my-parcels')
+                            Swal.fire({
+                                position: 'top-end',
+                                title: "successfull!",
+                                text: "Your products confirmed.",
+                                showConfirmButton: false,
+                                icon: "success",
+                                timer: 2500
+                                 });
+
+                            }
+                
+                   
+                  })
+
+            
+
+            }});
 
         
     };
@@ -144,6 +175,7 @@ const SendParcel = () => {
                             <input 
                                 type="text" 
                                 placeholder="Sender Name" 
+                                defaultValue={user?.displayName}
                                 className="input input-bordered w-full bg-slate-50/50"
                                 {...register('senderName', { required: true })}
                             />
@@ -153,6 +185,7 @@ const SendParcel = () => {
                             <input 
                                 type="email" 
                                 placeholder="Sender Email" 
+                                defaultValue={user?.email}
                                 className="input input-bordered w-full bg-slate-50/50"
                                 {...register('senderEmail', { required: true })}
                             />
