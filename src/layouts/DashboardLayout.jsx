@@ -1,5 +1,6 @@
 import React from 'react';
 import { CiDeliveryTruck } from 'react-icons/ci';
+import { FaMotorcycle, FaRegCreditCard } from 'react-icons/fa6';
 import { Link, NavLink, Outlet } from 'react-router';
 
 const DashboardLayout = () => {
@@ -38,15 +39,29 @@ const DashboardLayout = () => {
 
         <li>
            <NavLink
-             to={'/dashboard/my-parcels'}
-             className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="my-parcels" >
-
+              to={'/dashboard/my-parcels'}
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="my-parcels" >
               <CiDeliveryTruck />
-           
-            <span className="is-drawer-close:hidden">My Parcels</span>
-            
+              <span className="is-drawer-close:hidden">My Parcels</span>
             </NavLink>
+        </li>
 
+        <li>
+           <NavLink
+              to={'/dashboard/payment-history'}
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="payment-history" >
+                <FaRegCreditCard/>
+              <span className="is-drawer-close:hidden">Payment History</span>
+            </NavLink>
+        </li>
+
+        <li>
+           <NavLink
+              to={'/dashboard/approve-riders'}
+              className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="approve-riders" >
+                <FaMotorcycle/>
+              <span className="is-drawer-close:hidden"> Approve Riders </span>
+            </NavLink>
         </li>
 
         {/* List item */}

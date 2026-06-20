@@ -4,22 +4,24 @@ import useAuth from '../../../hooks/useAuth';
 import { Link } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
 
-    const {register, handleSubmit, formState :{ errors}} = useForm();
+    const {register, handleSubmit, formState :{errors}} = useForm();
 
     const {registerUser, updateUserProfile} = useAuth();
+    const axiosSecure = useAxiosSecure();
 
     const handleRegistration = (data) => {
 
-        console.log(data)
-
+        console.log( 'handle register data : ',  data)
         const profileImg = data.photo[0];
          
             registerUser(data.email, data.password)
              .then(res => {
                 console.log(res.user)
+
                 // 1 store the image formData
                 const formData  = new FormData();
                 formData.append('image', profileImg)
@@ -29,16 +31,33 @@ const Register = () => {
                  const img_API_URL = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_image_host_key}`
                     axios.post(img_API_URL, formData)
                      .then(res => {
-                        console.log('after img upload',res.data.data.display_url)
+                        const photoURL = res.data.data.display_url;
 
+                        // =-=-= UserInfo for sending infor to the backend & store database =-=-= //
+                            const userInfo = {
+                                displayName :  data.name,
+                                email: data.email,
+                                photoURL : photoURL
+                            }
+
+                            console.log('userInfo : ', userInfo);
+
+                        // send User information in the database 
+                            axiosSecure.post('/users', userInfo)
+                                .then(res => {
+                                    if(res.data.insertedId) {
+                                        console.log('user created in the database')
+                                    }
+                                })
+                                
                         // 3 =-= update user profile =-=
                         const userProfile = {
                             displayName :  data.name,
-                            photoUrl : res.data.data.display_url
+                            photoURL : photoURL
                         }
 
                           updateUserProfile(userProfile)
-                            .then(res => console.log('user profile updated done'))
+                            .then(res => console.log('user profile updated done', res.data))
                             .catch(err => console.log(err))
                     })
 

@@ -6,13 +6,16 @@ import AuthLayouts from "../layouts/AuthLayouts";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRouter from "./PrivateRouter";
-import Rider from "../pages/Rider/Rider";
+import Rider from "../pages/Rider/BeARider";
 import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
+import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
+import BeARider from "../pages/Rider/BeARider";
+import ApproveRiders from "../pages/Dashboard/ApproveRiders/ApproveRiders";
 
 export const router = createBrowserRouter([
   {
@@ -25,11 +28,12 @@ export const router = createBrowserRouter([
        },
        {
           path: 'rider',
-          element: <PrivateRouter><Rider> </Rider></PrivateRouter>
+          element: <PrivateRouter> <BeARider></BeARider> </PrivateRouter>,
+          loader: () => fetch('/warehouses.json').then(res => res.json())
        },
        {
           path: 'send-parcel',
-          element: <PrivateRouter> <SendParcel> </SendParcel> </PrivateRouter>,
+          element: <PrivateRouter><SendParcel></SendParcel></PrivateRouter>,
           loader: () => fetch('/warehouses.json').then(res => res.json())
        },
        {
@@ -73,6 +77,14 @@ export const router = createBrowserRouter([
       {
         path: 'payment-cancelled',
         Component: PaymentCancelled
+      },
+      {
+        path: 'payment-history',
+        Component: PaymentHistory
+      },
+      {
+        path: 'approve-riders',
+        Component: ApproveRiders
       }
     ]
   }

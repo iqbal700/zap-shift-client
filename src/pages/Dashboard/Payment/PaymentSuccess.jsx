@@ -4,7 +4,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const PaymentSuccess = () => {
 
-    // to grab the special id from url in the payment tab after the ques mark session_id
+    // Grab the special id from url in the payment tab after the ques mark session_id
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
     const [paymentInfo, setPaymentInfo] = useState({});

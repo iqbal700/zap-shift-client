@@ -29,8 +29,7 @@ const SendParcel = () => {
     const districtsByRegion = (region) => {
           const regionDistricts = serviceCenters.filter(c => c.region === region);
           const districts = regionDistricts.map(d => d.district);
-          return districts;
-         
+          return districts;    
     }
 
     // speciality of new Set() is its not allow double namings 
