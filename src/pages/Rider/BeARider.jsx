@@ -24,7 +24,7 @@ const BeARider = () => {
          
     }
 
-        // speciality of new Set() is its not allow double namings 
+        // speciality of new Set() is not allow double namings 
     const regions = [...new Set(regionsDuplicate)]
 
 
@@ -36,7 +36,7 @@ const BeARider = () => {
 
                 console.log(res.data)
                 if(res.data.insertedId) {
-                // reset();
+                  reset();
                      Swal.fire({
                             position: 'top-end',
                             title: "successfull!",

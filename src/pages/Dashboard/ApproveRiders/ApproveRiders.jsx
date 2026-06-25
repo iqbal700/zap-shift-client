@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { FaCheck, FaTimes, FaTrashAlt } from 'react-icons/fa';
+import { FaCheck, FaEye, FaTimes, FaTrashAlt } from 'react-icons/fa';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 
@@ -17,7 +17,7 @@ const ApproveRiders = () => {
         }
     });
 
-    // Unified Mutation for Approving, Rejecting & Deleting Riders
+    // Mutation for Approving, Rejecting & Deleting Riders
     const riderActionMutation = useMutation({
         mutationFn: async ({ id, actionType }) => {
             let res;
@@ -60,6 +60,7 @@ const ApproveRiders = () => {
                             <th className="py-4">Email</th>
                             <th className="py-4">District</th>
                             <th className="py-4">Status</th>
+                            <th className="py-4">Work Status</th>
                             <th className="py-4 rounded-tr-lg text-center">Actions</th>
                         </tr>
                     </thead>
@@ -73,7 +74,7 @@ const ApproveRiders = () => {
                     <th className="font-bold text-[#063535]">{index + 1}</th>
                     <td className="font-medium text-gray-900"> {rider.name} </td>
                     <td> {rider.email} </td>
-                    <td> {rider.riderDistrict || rider.district}</td>
+                    <td> {rider.riderDistrict}</td>
                     <td> 
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                             rider.status === 'approved' ? 'text-green-800 bg-green-100' : 'text-red-600 bg-red-100' 
@@ -81,10 +82,15 @@ const ApproveRiders = () => {
                             {rider.status || "Pending"}
                         </span>
                     </td>
+                     <td> {rider.workStatus}</td>
                     
                     {/* Unified Action Buttons Cell */}
                     <td className="py-4">
                         <div className="flex items-center justify-center gap-4">
+                            {/* details Eye button  */}
+                            <button className='btn border-none bg-none'>
+                                <FaEye/>
+                            </button>
                             
                             {/* Approve Button */}
                             <button 

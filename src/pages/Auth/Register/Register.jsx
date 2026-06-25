@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -12,6 +12,7 @@ const Register = () => {
 
     const {registerUser, updateUserProfile} = useAuth();
     const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
 
     const handleRegistration = (data) => {
 
@@ -21,6 +22,7 @@ const Register = () => {
             registerUser(data.email, data.password)
              .then(res => {
                 console.log(res.user)
+                navigate('/')
 
                 // 1 store the image formData
                 const formData  = new FormData();

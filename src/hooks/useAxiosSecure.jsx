@@ -40,7 +40,6 @@ const useAxiosSecure = () => {
             (response) => response,
             (error) => {
                 console.log(error);
-                
                 const statusCode = error.response ? error.response.status : error.status;
                 
                 if (statusCode === 401 || statusCode === 403) {
