@@ -6,20 +6,23 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 
 const SendParcel = () => {
+    const { user } = useAuth(); // Moved to the top to initialize default values dynamically
+    const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
+
     const { 
         register, 
         handleSubmit,
-         watch, 
-          formState: { errors }
-        } = useForm({
+        watch, 
+        formState: { errors }
+    } = useForm({
+        // Configured defaultValues at the initialization level to prevent blank data submission
         defaultValues: {
-            parcelType: 'Document'
+            parcelType: 'Document',
+            senderName: user?.displayName || '',
+            senderEmail: user?.email || ''
         }
     });
-
-    const axiosSecure = useAxiosSecure();
-    const {user} = useAuth();
-    const navigate = useNavigate();
 
     const serviceCenters = useLoaderData();
     const senderRegion = watch('senderRegion');
@@ -81,7 +84,7 @@ const SendParcel = () => {
                     console.log( 'after',res.data);
                     if(res.data.insertedId) {
                          navigate('/dashboard/my-parcels')
-                            Swal.fire({
+                             Swal.fire({
                                 position: 'top-end',
                                 title: "successfull!",
                                 text: "Your products confirmed.",
@@ -92,7 +95,7 @@ const SendParcel = () => {
 
                             }
                 
-                   
+                    
                   })
 
             
@@ -174,7 +177,6 @@ const SendParcel = () => {
                             <input 
                                 type="text" 
                                 placeholder="Sender Name" 
-                                defaultValue={user?.displayName}
                                 className="input input-bordered w-full bg-slate-50/50"
                                 {...register('senderName', { required: true })}
                             />
@@ -184,7 +186,6 @@ const SendParcel = () => {
                             <input 
                                 type="email" 
                                 placeholder="Sender Email" 
-                                defaultValue={user?.email}
                                 className="input input-bordered w-full bg-slate-50/50"
                                 {...register('senderEmail', { required: true })}
                             />

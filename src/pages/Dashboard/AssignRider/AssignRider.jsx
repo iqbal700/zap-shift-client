@@ -39,7 +39,7 @@ const AssignRider = () => {
              riderModalRef.current.close();  // ==-== after clicking assign then modal vanish ==-== //
     
                 Swal.fire({
-                    title: `Are You confirmed to delete it ?`,
+                    title: `Are You confirmed to Assign it ?`,
                     text: "You won't be able to revert this!",
                     icon: "warning",
                     showCancelButton: true,
@@ -81,7 +81,7 @@ const AssignRider = () => {
     return (
         <div className="p-6 bg-base-100 rounded-lg shadow-md m-4">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Assign Rider Management: {riders.length}</h2>
+                <h2 className="text-2xl font-bold text-gray-800"> Available Rider: {riders.length}</h2>
                 <span className="badge badge-primary text-black badge-lg font-semibold">
                     Pending Pickups: {parcels.length}
                 </span>

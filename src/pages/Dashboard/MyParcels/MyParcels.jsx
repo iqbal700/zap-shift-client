@@ -22,34 +22,48 @@ const MyParcels = () => {
     })
 
       const handleParcelDelete = id => {
-          console.log(id);
+          console.log("Deleting Parcel ID:", id);
+          
           Swal.fire({
-                      title: `Are You confirmed to delete it ?`,
-                      text: "You won't be able to revert this!",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#3085d6",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: " agree!"
-                      }).then((result) => {
-                      if (result.isConfirmed) {
-                                                       
-                        // ==-== Delete api with the confirmation messages ==-=
-                           
-                        axiosSecure.delete(`/parcels/${id}`)
-                          .then(res => {
-                            console.log(res.data)
-                            if(res.data.deletedCount) {
-                                 refetch(); // => refresh the data after delete automatically
-                                   Swal.fire({
-                                      title: "successfull!",
-                                      text: "Your parcels Deleted.",
-                                      icon: "success"});
-                            }
-                          })                        
-                                     
-                      }});
-      }
+              title: "Are you sure you want to delete it?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  
+                  // Send DELETE request to the backend
+                  axiosSecure.delete(`/parcels/${id}`)
+                      .then(res => {
+                          console.log("Server Response:", res.data);
+                          
+                          // Safe check if the document was actually deleted
+                          if (res.data.deletedCount > 0) {
+                              refetch(); // Automatically refresh the UI data
+                              
+                              Swal.fire({
+                                  title: "Successful!",
+                                  text: "Your parcel has been deleted.",
+                                  icon: "success"
+                              });
+                          }
+                      })
+                      .catch(err => {
+                          console.error("Delete API Error:", err);
+                          
+                          // Alert user if something goes wrong with the server
+                          Swal.fire({
+                              title: "Error!",
+                              text: "Something went wrong. Could not delete the parcel.",
+                              icon: "error"
+                          });
+                      });
+              }
+          });
+      };
 
 
 
@@ -105,8 +119,6 @@ const MyParcels = () => {
                   </td>
               </tr>)
           }
-
-        {/* row 1 */}
         
       </tbody>
     </table>
