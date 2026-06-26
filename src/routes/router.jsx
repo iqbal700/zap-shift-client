@@ -21,6 +21,8 @@ import AdminRoute from "./AdminRoute";
 import AssignRider from "../pages/Dashboard/AssignRider/AssignRider";
 import AssignedDeliveries from "../pages/Dashboard/AssignedDelivaries/AssignedDeliveries";
 import RiderRoute from "./RiderRoute";
+import CompletedDeliveries from "../pages/Dashboard/completedDeliveries/CompletedDeliveries";
+import TrackingParcel from "../pages/TrackingParcel/TrackingParcel";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +48,10 @@ export const router = createBrowserRouter([
         Component: Coverage,
         loader: () => fetch('/warehouses.json').then(res => res.json())
 
+       },
+       {
+        path: 'tracking-parcel/:trackingId',
+        Component: TrackingParcel,
        }
     ]
   },
@@ -88,9 +94,15 @@ export const router = createBrowserRouter([
         Component: PaymentHistory
       },
 
+      // ==-== Admin Only Routes ==-== //
+
       {
         path: 'assigned-deliveries',
         element: <RiderRoute> <AssignedDeliveries> </AssignedDeliveries> </RiderRoute> 
+      },
+      {
+        path: 'completed-deliveries',
+        element: <RiderRoute> <CompletedDeliveries></CompletedDeliveries> </RiderRoute> 
       },
 
       // ==-== Admin Only Routes ==-== //

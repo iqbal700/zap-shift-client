@@ -30,7 +30,7 @@ const AssignedDeliveries = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // You can send a PATCH request to update the delivery status
-                axiosSecure.patch(`/parcels/status/${id}`, { deliveryStatus: status })
+                axiosSecure.patch(`/parcels/status/${id}`, { deliveryStatus: status, trackingId: parcels.trackingId })
                     .then(res => {
                         if (res.data.modifiedCount > 0) {
                             refetch();  

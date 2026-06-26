@@ -3,6 +3,7 @@ import { CiDeliveryTruck } from 'react-icons/ci';
 import { FaTasks, FaTruckPickup, FaUsers } from 'react-icons/fa';
 import { FaMotorcycle, FaRegCreditCard } from 'react-icons/fa6';
 import { Link, NavLink, Outlet } from 'react-router';
+import { MdTaskAlt } from "react-icons/md";
 import useRole from '../hooks/useRole';
 
 const DashboardLayout = () => {
@@ -69,6 +70,14 @@ const DashboardLayout = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="assigned-deliveries" >
                   <FaTasks/>
                 <span className="is-drawer-close:hidden"> Assigned Deliveries </span>
+              </NavLink>
+          </li>
+          <li>
+              <NavLink
+                to={'/dashboard/completed-deliveries'}
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="completed-deliveries" >
+                  <MdTaskAlt />
+                <span className="is-drawer-close:hidden"> Completed Deliveries </span>
               </NavLink>
           </li>
           
