@@ -80,7 +80,7 @@ const MyParcels = () => {
           <th>Cost</th>
           <th>Payment</th>
           <th>Tracking Id </th>
-          <th>Delivary Status</th>
+          <th>Delivery Status</th>
           <th>Actions</th>
         </tr>
       </thead>
