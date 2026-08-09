@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import RootLayouts from "../layouts/RootLayouts";
-import Home from "../pages/Home/Home/Home";
+import Home from "../pages/Home/home/Home";
 import Coverage from "../pages/coverage/Coverage";
 import AuthLayouts from "../layouts/AuthLayouts";
 import Login from "../pages/Auth/Login/Login";
@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
         element: <RiderRoute> <CompletedDeliveries></CompletedDeliveries> </RiderRoute> 
       },
 
-      // ==-== Admin Only Routes ==-== //
+      // ==-== Riders Only Routes ==-== //
       {
         path: 'approve-riders',
         element : <AdminRoute> <ApproveRiders></ApproveRiders> </AdminRoute>
