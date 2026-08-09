@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../../components/logo/logo';
+import Logo from '../../../components/logo/Logo';
 import { Link, NavLink } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 

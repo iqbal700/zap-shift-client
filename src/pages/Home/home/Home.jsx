@@ -10,7 +10,7 @@ const reviewPromise = fetch('/reviews.json').then(res => res.json())
 const Home = () => {
     return (
         <div>
-            <Banner></Banner>
+             <Banner></Banner>
              <Works></Works>
              <Services></Services>
              <Brands></Brands>
