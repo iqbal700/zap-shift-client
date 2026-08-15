@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const UsersManagements = () => {
     const axiosSecure = useAxiosSecure();
-    const [searchUser, setSearchUser] = useState();
+    const [searchUser, setSearchUser] = useState('');
     
     // get All users from database
     const { data: users = [], refetch, } = useQuery({
@@ -16,7 +16,7 @@ const UsersManagements = () => {
         }
     });
 
-    //  mutation for Make Admin / Remove Admin  
+    // 01 mutation for Make Admin / Remove Admin  
     const { mutate: updateRole } = useMutation({
         mutationFn: async ({ userId, newRole }) => {
             const res = await axiosSecure.patch(`/users/role/${userId}`, { role: newRole });
@@ -33,7 +33,7 @@ const UsersManagements = () => {
         }
     });
 
-    // ৩. mutation for delete users
+    // 02 mutation for delete users
     const { mutate: deleteUser } = useMutation({
         mutationFn: async (userId) => {
             const res = await axiosSecure.delete(`/users/${userId}`);
@@ -47,7 +47,26 @@ const UsersManagements = () => {
         }
     });
 
-    // ==-==  Role change handler ==-== //
+
+    // ==-==  Role delete handler mutation 02 ==-== //
+    const handleDeleteUser = (userId, name) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to permanently delete ${name}!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser(userId);
+            }
+        });
+    };
+
+
+      // ==-==  Role change handler mutation 01 ==-== //
     const handleRoleChange = (userId, name, currentRole) => {
         const newRole = currentRole === 'admin' ? 'user' : 'admin';
         const actionText = currentRole === 'admin' ? 'remove from Admin' : 'make an Admin';
@@ -63,23 +82,6 @@ const UsersManagements = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 updateRole({ userId, newRole });
-            }
-        });
-    };
-
-    // ==-==  Role delete handler ==-== //
-    const handleDeleteUser = (userId, name) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: `You are about to permanently delete ${name}!`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                deleteUser(userId);
             }
         });
     };

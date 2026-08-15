@@ -11,10 +11,9 @@ import ReviewCard from './ReviewCard';
 const Reviews = ({reviewPromise}) => {
 
     const reviews = use(reviewPromise);
-    console.log(reviews);
+      //console.log(reviews);
 
     return (
-
        <div className='text-center mt-15'>
            <div className='mb-15'>
                <h3 className="text-3xl text-centre">Reviews</h3>
@@ -42,7 +41,7 @@ const Reviews = ({reviewPromise}) => {
        {
         reviews.map((review, index) =>
             <SwiperSlide key={index}>
-               <ReviewCard review={review} > </ReviewCard>
+               <ReviewCard review={review}> </ReviewCard>
             </SwiperSlide> )
        }
 

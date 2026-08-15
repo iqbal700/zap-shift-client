@@ -6,7 +6,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 
 const SendParcel = () => {
-    const { user } = useAuth(); // Moved to the top to initialize default values dynamically
+    const { user } = useAuth(); //initialize default values dynamically
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
@@ -25,9 +25,14 @@ const SendParcel = () => {
     });
 
     const serviceCenters = useLoaderData();
+    // console.log(serviceCenters)
     const senderRegion = watch('senderRegion');
     const receiverRegion = watch('receiverRegion');
-    const regionsDuplicate = serviceCenters.map(c => c.region);
+    const regionsDuplicate = serviceCenters.map(c => c.region);  // Bring all the region name 
+
+    // // there are so many region with same name, to prevent it using this logic, its not allow same name twice.
+    const regions = [...new Set(regionsDuplicate)] 
+        //console.log( 'not duplicate region:', regions)
 
     const districtsByRegion = (region) => {
           const regionDistricts = serviceCenters.filter(c => c.region === region);
@@ -35,13 +40,9 @@ const SendParcel = () => {
           return districts;    
     }
 
-    // speciality of new Set() is its not allow double namings 
-    const regions = [...new Set(regionsDuplicate)]
-    //console.log(regions)
-    
 
     const onSubmit = (data) => {
-        console.log("Parcel Booking Data:", data);
+        //console.log("Parcel Booking Data:", data);
         const weight = parseFloat(data.parcelWeight)
         const isDocument = data.parcelType === 'Document';
         const isSameDistrict = data.senderDistrict === data.receiverDistrict;
@@ -65,7 +66,7 @@ const SendParcel = () => {
               console.log('delivery charge',cost);
               data.cost = cost;
 
-            // ==-== confirmation message before finale procced ==-== 
+            // ==-== confirmation message before finale proceed ==-== //
 
          Swal.fire({
             title: `Agree with the cost ${cost} ?`,
@@ -78,10 +79,9 @@ const SendParcel = () => {
             }).then((result) => {
             if (result.isConfirmed) {
 
-
                  axiosSecure.post('/parcels', data) 
                   .then( res => {
-                    console.log( 'after',res.data);
+                   // console.log( 'after submit form data',res.data);
                     if(res.data.insertedId) {
                          navigate('/dashboard/my-parcels')
                              Swal.fire({
@@ -92,20 +92,11 @@ const SendParcel = () => {
                                 icon: "success",
                                 timer: 2500
                                  });
-
-                            }
-                
-                    
+                            }                   
                   })
-
-            
-
             }});
-
         
     };
-
-
 
 
     return (
@@ -320,7 +311,6 @@ const SendParcel = () => {
                                 }
                             </select>
                         </div>
-
                         <div>
                             <label className="label font-bold text-[#0D3E36] text-xs uppercase tracking-wide">Delivery Instruction</label>
                             <textarea 
@@ -330,10 +320,9 @@ const SendParcel = () => {
                             ></textarea>
                         </div>
                     </div>
-
                 </div>
 
-                {/* Bottom Notice & Button */}
+                {/*Bottom Notice & Button*/}
                 <div className="mt-6 space-y-4">
                     <p className="text-sm font-semibold text-gray-700">* PickUp Time 4pm-7pm Approx.</p>
                     <button 

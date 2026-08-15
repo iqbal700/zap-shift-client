@@ -18,14 +18,12 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 const Coverage = () => {
     const position = [23.6850, 90.3563]; 
-    const ourLocations = useLoaderData() || []; 
+    const ourLocations = useLoaderData() || []; // bring the data using useLoader, from router.jsx
 
     return (
         <div className="p-10">
             <h2 className="text-3xl font-bold mb-5">We are available in 64 districts</h2>
-
-            
-            <div className='w-full h-[600px] border rounded-xl overflow-hidden'>
+            <div className='w-full h-150 border rounded-xl overflow-hidden'>
                 <MapContainer 
                     center={position}
                     zoom={7} 

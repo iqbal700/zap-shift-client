@@ -8,6 +8,8 @@ const AdminRoute = ({ children }) => {
     const { user, loading } = useAuth();
     const { role, isLoading } = useRole();
 
+    console.log( 'role:',role, 'loading:', loading, 'isLoading:', isLoading)
+
     if (loading || isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">

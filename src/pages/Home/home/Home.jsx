@@ -14,7 +14,7 @@ const Home = () => {
              <Works></Works>
              <Services></Services>
              <Brands></Brands>
-             <Reviews reviewPromise={reviewPromise} ></Reviews>
+             <Reviews reviewPromise={reviewPromise}></Reviews>
         </div>
     );
 };

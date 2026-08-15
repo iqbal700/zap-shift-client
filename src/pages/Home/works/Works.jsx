@@ -3,7 +3,7 @@ import bookingIcon from '../../../assets/bookingIcon.png'
 
 const Works = () => {
 
-    const worksArray = [1,2,3]
+const worksArray = [1,2,3]
 
     return (
         <div>
@@ -15,14 +15,12 @@ const Works = () => {
                         <img className='w-15' src={bookingIcon} alt="bookingIcon" />
                         <h1 className='font-bold text-secondary'>Booking Pick & Drop</h1>
                         <p >From personal packages to business shipments we deliver on time, every Time</p>
-                        
                     </div>
                  )
                     
                 )
             }
             </div>
-            
             
         </div>
     );

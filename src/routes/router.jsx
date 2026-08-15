@@ -35,9 +35,10 @@ export const router = createBrowserRouter([
         Component: Home
        },
        {
-          path: 'rider',
-          element: <PrivateRouter> <BeARider></BeARider> </PrivateRouter>,
-          loader: () => fetch('/warehouses.json').then(res => res.json())
+        path: 'coverage',
+        Component: Coverage,
+        loader: () => fetch('/warehouses.json').then(res => res.json())
+
        },
        {
           path: 'send-parcel',
@@ -45,17 +46,19 @@ export const router = createBrowserRouter([
           loader: () => fetch('/warehouses.json').then(res => res.json())
        },
        {
-        path: 'coverage',
-        Component: Coverage,
-        loader: () => fetch('/warehouses.json').then(res => res.json())
-
+          path: 'rider', //be a rider
+          element: <PrivateRouter> <BeARider></BeARider> </PrivateRouter>,
+          loader: () => fetch('/warehouses.json').then(res => res.json())
        },
+       
        {
         path: 'tracking-parcel/:trackingId',
         Component: TrackingParcel,
        }
     ]
   },
+
+  // ==-== Login & Register Related ==-== //
   {
     path: '/',
     Component: AuthLayouts,
@@ -70,6 +73,8 @@ export const router = createBrowserRouter([
       }
     ]
   },
+
+  // ==-== DashBoard With Restricted Entry ==-== //
   {
     path: 'dashboard',
     element: <PrivateRouter><DashboardLayout> </DashboardLayout></PrivateRouter>,
@@ -77,12 +82,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: DashboardHome
+      },
 
-      },
       {
-          path: 'my-parcels',
-          Component: MyParcels
+        path: 'my-parcels',
+        Component: MyParcels
       },
+
+    // ==-=== Payment Related Components ==-== //
       {
         path: 'payment/:parcelId',
         Component: Payment
@@ -100,8 +107,7 @@ export const router = createBrowserRouter([
         Component: PaymentHistory
       },
 
-      // ==-== Admin Only Routes ==-== //
-
+      // ==-== Riders Only Routes ==-== //
       {
         path: 'assigned-deliveries',
         element: <RiderRoute> <AssignedDeliveries> </AssignedDeliveries> </RiderRoute> 
@@ -111,7 +117,7 @@ export const router = createBrowserRouter([
         element: <RiderRoute> <CompletedDeliveries></CompletedDeliveries> </RiderRoute> 
       },
 
-      // ==-== Riders Only Routes ==-== //
+      // ==-== Admin Only Routes ==-== //
       {
         path: 'approve-riders',
         element : <AdminRoute> <ApproveRiders></ApproveRiders> </AdminRoute>

@@ -6,8 +6,9 @@ import Swal from 'sweetalert2';
 const AssignRider = () => {
     const axiosSecure = useAxiosSecure();
     const riderModalRef = useRef();
-    const [selectedParcel, setSelectedParcel] = useState(null);
+    const [selectedParcel, setSelectedParcel] = useState(null);  //
 
+    // ==-== Parcels Query for getting/showing only pending-pickup parcels ==-==//
     const { data: parcels = [], isLoading } = useQuery({
         queryKey: ['parcels', 'pending-pickup'],
         queryFn: async () => {
@@ -16,13 +17,13 @@ const AssignRider = () => {
         }
     });
 
-    // ==-== When user clicks on "Assign Rider", it will trigger this query to load available riders ==-== //
-    const { data: riders = [], refetch } = useQuery({
+    // ==-== Riders Query for showing available riders based on parcel SenderDistrict ==-== //
+    const {data: riders = [], refetch } = useQuery({
         queryKey: ['riders', selectedParcel?.senderDistrict, 'available'],
         enabled: !!selectedParcel && !!selectedParcel?.senderDistrict,
         queryFn: async () => {
             const res = await axiosSecure.get(`/riders?status=approved&district=${selectedParcel.senderDistrict}&workStatus=available`);
-            console.log("Riders Data from Server:", res.data);
+            //console.log("Riders Data from Server:", res.data);
             return res.data;
         }
     });
@@ -31,13 +32,13 @@ const AssignRider = () => {
     const openAssignRiderModal = parcel => {
         setSelectedParcel(parcel);
         riderModalRef.current.showModal();
-        console.log('openModal handle: ', parcel);
+       // console.log('openModal handle: ', parcel);
     };
 
+    // Assign button
     const handleAssignRider = rider => {
 
              riderModalRef.current.close();  // ==-== after clicking assign then modal vanish ==-== //
-    
                 Swal.fire({
                     title: `Are You confirmed to Assign it ?`,
                     text: "You won't be able to revert this!",
@@ -57,12 +58,11 @@ const AssignRider = () => {
                                 trackingId: selectedParcel.trackingId
                               }
                                 
-                            
                          axiosSecure.patch(`/parcels/${selectedParcel._id}`, riderInfo)
                             .then(res => {
                                 if(res.data.modifiedCount) {
                                     
-                                    refetch(); // => refresh the data after delete automatically
+                                    refetch(); // => refresh the data after assign
                                     Swal.fire({
                                         title: "successfull!",
                                         text: "Your product assigned to rider.",
