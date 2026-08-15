@@ -7,9 +7,9 @@ const CompletedDeliveries = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    // ==-== Fetch parcels assigned to this specific rider ==-== //
+    // ==-== Query for getting only completed deliveries list ==-== //
     const { data: parcels = [], isLoading } = useQuery({
-        queryKey: ['parcels', user?.email, 'parcel delivered'], // Unique query key for completed deliveries
+        queryKey: ['parcels', user?.email, 'parcel delivered'],
         enabled: !!user?.email, 
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel delivered`);

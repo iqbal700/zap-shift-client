@@ -28,7 +28,7 @@ const Payment = () => {
          const res = await axiosSecure.post('/create-checkout-session', paymentInfo);
 
          console.log(res.data);
-         window.location.assign(res.data.url);
+         window.location.assign(res.data.url); // to show payment option in a separate window
         
      }
 
@@ -40,7 +40,7 @@ const Payment = () => {
         return <div className="text-center my-10 text-red-500">Parcel data not found!</div>;
     }
 
-    console.log(parcel)
+    //console.log(parcel)
 
 
     return (

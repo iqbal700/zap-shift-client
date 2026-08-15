@@ -8,7 +8,7 @@ const AssignedDeliveries = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    // ==-== Fetch parcels assigned to this specific rider ==-== //
+    // ==-== Fetch All parcels for this specific rider ==-== //
     const { data: parcels = [], refetch, isLoading } = useQuery({
         queryKey: ['parcels', user?.email, 'assigned to rider'],
         enabled: !!user?.email, 
@@ -19,24 +19,24 @@ const AssignedDeliveries = () => {
     });
 
     // ==-== Handle Delivery Status Update (Accept / Reject) ==-== //
-    const handleStatusUpdate = (id, status) => {
+    const handleStatusUpdate = (id, deliveryStatus, trackingId) => {
         Swal.fire({
-            title: `Are you sure to ${status} this delivery?`,
+            title: `Are you sure to ${deliveryStatus} this delivery?`,
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: status === 'accepted' ? "#3085d6" : "#d33",
+            confirmButtonColor: deliveryStatus === 'accepted' ? "#3085d6" : "#d33",
             cancelButtonColor: "#6b7280",
-            confirmButtonText: `Yes, ${status}!`
+            confirmButtonText: `Yes, ${deliveryStatus}!`
         }).then((result) => {
             if (result.isConfirmed) {
                 // You can send a PATCH request to update the delivery status
-                axiosSecure.patch(`/parcels/status/${id}`, { deliveryStatus: status, trackingId: parcels.trackingId })
+                axiosSecure.patch(`/parcels/status/${id}`, { deliveryStatus: deliveryStatus, trackingId: trackingId })
                     .then(res => {
                         if (res.data.modifiedCount > 0) {
                             refetch();  
                             Swal.fire({
                                 title: "Updated!",
-                                text: `Delivery has been ${status}.`,
+                                text: `Delivery has been ${deliveryStatus}.`,
                                 icon: "success"
                             });
                         }
@@ -102,13 +102,13 @@ const AssignedDeliveries = () => {
                                         
                                         <div className="flex justify-center gap-2">
                                             <button 
-                                                onClick={() => handleStatusUpdate(parcel._id, 'accepted')} 
+                                                onClick={() => handleStatusUpdate(parcel._id, 'accepted', parcel.trackingId)} 
                                                 className="btn btn-xs btn-success text-white font-medium"
                                             >
                                                 Accept
                                             </button>
                                             <button 
-                                                onClick={() => handleStatusUpdate(parcel._id, 'rejected')} 
+                                                onClick={() => handleStatusUpdate(parcel._id, 'rejected', parcel.trackingId)} 
                                                 className="btn btn-xs btn-error text-white font-medium"
                                             >
                                                 Reject
@@ -120,7 +120,7 @@ const AssignedDeliveries = () => {
                                         <>                                                                                                                                                             
                                             <button 
                                                 disabled={parcel.deliveryStatus === 'parcel picked up' || parcel.deliveryStatus === 'parcel delivered'}
-                                                onClick={() => handleStatusUpdate(parcel._id, 'parcel picked up')} 
+                                                onClick={() => handleStatusUpdate(parcel._id, 'parcel picked up', parcel.trackingId)} 
                                                 className={`btn font-semibold m-4 ${
                                                     parcel.deliveryStatus === 'parcel picked up' ? 'btn-disabled' : 'btn-primary text-black'
                                                 }`}
@@ -130,7 +130,7 @@ const AssignedDeliveries = () => {
 
                                             <button 
                                                 disabled={parcel.deliveryStatus !== 'parcel picked up'}
-                                                onClick={() => handleStatusUpdate(parcel._id, 'parcel delivered')} 
+                                                onClick={() => handleStatusUpdate(parcel._id, 'parcel delivered', parcel.trackingId)} 
                                                 className={`btn font-semibold ${
                                                     parcel.deliveryStatus === 'parcel delivered' 
                                                         ? 'btn-success text-white' 
