@@ -7,6 +7,8 @@ const TrackingParcel = () => {
     const { trackingId } = useParams();
     const axiosInstance = useAxios();
 
+    console.log("trackingId:",trackingId)
+
     const { data: trackingData = [], isLoading, isError, error } = useQuery({
         queryKey: ['tracking', trackingId],
         queryFn: async () => {

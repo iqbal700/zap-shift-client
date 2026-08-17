@@ -10,8 +10,7 @@ import { Link } from 'react-router';
 const MyParcels = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    
-    // store the specefic payment parcel id
+    // store the specific payment parcel id
     const [loadingPaymentId, setLoadingPaymentId] = useState(null);
 
     const { data: parcels = [], refetch } = useQuery({
@@ -48,8 +47,9 @@ const MyParcels = () => {
                         Swal.fire({
                             title: "Error!",
                             text: "Something went wrong. Could not delete the parcel.",
-                            icon: "error"
+                            icon: "error", 
                         });
+                        console.log(err)
                     });
             }
         });

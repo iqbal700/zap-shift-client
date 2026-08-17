@@ -9,16 +9,13 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 const Register = () => {
 
     const {register, handleSubmit, formState :{errors}} = useForm();
-
     const {registerUser, updateUserProfile} = useAuth();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
 
     const handleRegistration = (data) => {
-
-        console.log( 'handle register data : ',  data)
+        console.log( 'handle register data:',  data)
         const profileImg = data.photo[0];
-         
             registerUser(data.email, data.password)
              .then(res => {
                 console.log(res.user)
@@ -111,9 +108,7 @@ const Register = () => {
                          {  required: true,
                              minLength: 6,
                              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/
-
                        })}
-                
                   />
 
                     {

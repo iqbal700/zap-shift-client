@@ -10,7 +10,6 @@ import Rider from "../pages/Rider/BeARider";
 import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
-import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
@@ -24,6 +23,7 @@ import RiderRoute from "./RiderRoute";
 import CompletedDeliveries from "../pages/Dashboard/completedDeliveries/CompletedDeliveries";
 import TrackingParcel from "../pages/TrackingParcel/TrackingParcel";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import Pricing from "../pages/pricing/Pricing";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +49,11 @@ export const router = createBrowserRouter([
           path: 'rider', //be a rider
           element: <PrivateRouter> <BeARider></BeARider> </PrivateRouter>,
           loader: () => fetch('/warehouses.json').then(res => res.json())
+       },
+       {
+          path: 'pricing',
+          element: <Pricing> </Pricing>
+          
        },
        
        {
@@ -90,10 +95,6 @@ export const router = createBrowserRouter([
       },
 
     // ==-=== Payment Related Components ==-== //
-      {
-        path: 'payment/:parcelId',
-        Component: Payment
-      },
       {
         path: 'payment-success',
         Component: PaymentSuccess

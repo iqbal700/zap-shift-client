@@ -18,6 +18,7 @@ const Navbar = () => {
             <li> <NavLink to={"/"}> Home </NavLink> </li>
             <li> <NavLink to={'/coverage'}> Coverage </NavLink> </li>
             <li> <NavLink to={'/send-parcel'}> Send Parcel </NavLink> </li>
+            <li> <NavLink to={'/pricing'}> Pricing </NavLink> </li>
             <li> <NavLink to={'/rider'}> Be a Rider </NavLink> </li>
 
             {

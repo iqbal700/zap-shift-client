@@ -14,7 +14,7 @@ const useAxiosSecure = () => {
 
     useEffect(() => {
         // ==-== Intercepts request for the backend ==-== //
-        const reqInterCeptor = axiosSecure.interceptors.request.use(async (config) => { 
+        const reqInterCeptor = axiosSecure.interceptors.request.use(async(config) => { 
             try {
                 const auth = getAuth();
                 const currentUser = auth.currentUser;
@@ -28,12 +28,14 @@ const useAxiosSecure = () => {
                 }
             } catch (error) {
                 console.error("Error refreshing token:", error);
-            }
-            
+            }           
             return config;
+
         }, (error) => {
             return Promise.reject(error);
         });
+
+
 
         // ==-== Interceptors for Response ==-== //
         const resInterceptor = axiosSecure.interceptors.response.use(
@@ -61,7 +63,7 @@ const useAxiosSecure = () => {
         }
 
     }, [logoutUser, navigate, user]);
-
+    
     return axiosSecure;
 };
 
