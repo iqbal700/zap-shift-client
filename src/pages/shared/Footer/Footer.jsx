@@ -1,59 +1,107 @@
 import React from 'react';
 import Logo from '../../../components/logo/Logo';
+import { Link } from 'react-router';
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaAppStoreIos, FaGooglePlay } from 'react-icons/fa';
+import { FiSend } from 'react-icons/fi';
 
 const Footer = () => {
-    return (
-        <div>
-           <footer className="footer footer-horizontal text-secondary  footer-center p-10">
-                <aside>
-                  <Logo></Logo>   {/*  using components for logo */}
-                    <p className="font-bold">
-                    ACME Industries Ltd.
-                    <br />
-                    Providing reliable tech since 1992
-                    </p>
-                    <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
-                </aside>
-                <nav>
-                    <div className="grid grid-flow-col gap-4">
-                    <a>
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        className="fill-current">
-                        <path
-                            d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-                        </svg>
-                    </a>
-                    <a>
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        className="fill-current">
-                        <path
-                            d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-                        </svg>
-                    </a>
-                    <a>
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        className="fill-current">
-                        <path
-                            d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-                        </svg>
-                    </a>
-                    </div>
-                </nav>
-                </footer>
+  return (
+    <footer className="bg-black text-gray-300 pt-16 pb-8 border-t border-zinc-800 mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Section: Navigation & Links */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-zinc-800">
+          
+          {/* Brand Info */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+           <Logo light={true} />
+            <p className="text-sm text-gray-400 max-w-sm leading-relaxed mt-2">
+              Fast, reliable, and secure parcel delivery service nationwide. Track your packages in real-time with zero hassle.
+            </p>
+
+            {/* Newsletter Subscription */}
+            <div className="mt-2 max-w-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 block mb-2">
+                Subscribe for updates
+              </span>
+              <div className="flex items-center gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-emerald-400 transition"
+                />
+                <button 
+                  className="btn btn-primary bg-emerald-500 hover:bg-emerald-600 border-none text-black px-4 py-2.5 rounded-lg flex items-center justify-center"
+                  aria-label="Subscribe"
+                >
+                  <FiSend className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="flex flex-col gap-3">
+            <span className="text-white font-semibold text-base mb-1">Services</span>
+            <Link to="/send-parcel" className="text-sm hover:text-emerald-400 transition-colors">Send Parcel</Link>
+            <Link to="/coverage" className="text-sm hover:text-emerald-400 transition-colors">Coverage Area</Link>
+            <Link to="/pricing" className="text-sm hover:text-emerald-400 transition-colors">Parcel Rates</Link>
+            <Link to="/rider" className="text-sm hover:text-emerald-400 transition-colors">Become a Rider</Link>
+          </div>
+
+          {/* Company */}
+          <div className="flex flex-col gap-3">
+            <span className="text-white font-semibold text-base mb-1">Company</span>
+            <Link to="#" className="text-sm hover:text-emerald-400 transition-colors">About Us</Link>
+            <Link to="#" className="text-sm hover:text-emerald-400 transition-colors">Latest News</Link>
+            <Link to="#" className="text-sm hover:text-emerald-400 transition-colors">Careers</Link>
+            <Link to="#" className="text-sm hover:text-emerald-400 transition-colors">Contact Support</Link>
+          </div>
+
+          {/* Download App & Social */}
+          <div className="flex flex-col gap-4">
+            <span className="text-white font-semibold text-base">Get Our App</span>
+            <div className="flex flex-col gap-2.5">
+              <button className="flex items-center gap-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3.5 py-2 rounded-xl transition text-left">
+                <FaGooglePlay className="text-emerald-400 text-xl shrink-0" />
+                <div>
+                  <span className="block text-[10px] uppercase text-gray-400 leading-tight">Get it on</span>
+                  <span className="text-xs font-semibold text-white">Google Play</span>
+                </div>
+              </button>
+              <button className="flex items-center gap-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 px-3.5 py-2 rounded-xl transition text-left">
+                <FaAppStoreIos className="text-emerald-400 text-2xl shrink-0" />
+                <div>
+                  <span className="block text-[10px] uppercase text-gray-400 leading-tight">Download on</span>
+                  <span className="text-xs font-semibold text-white">App Store</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
         </div>
-    );
+
+        {/* Bottom Section: Copyright & Legal */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+          <p>© {new Date().getFullYear()} zapShift Logistics Ltd. All rights reserved.</p>
+          
+          {/* Social Icons */}
+          <div className="flex items-center gap-4 text-base">
+            <a href="#" className="hover:text-emerald-400 transition-colors" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="#" className="hover:text-emerald-400 transition-colors" aria-label="Twitter"><FaTwitter /></a>
+            <a href="#" className="hover:text-emerald-400 transition-colors" aria-label="Instagram"><FaInstagram /></a>
+            <a href="#" className="hover:text-emerald-400 transition-colors" aria-label="LinkedIn"><FaLinkedinIn /></a>
+          </div>
+
+          {/* Legal Links */}
+          <div className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-emerald-400 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-emerald-400 transition-colors">Terms of Service</Link>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
 };
 
 export default Footer;

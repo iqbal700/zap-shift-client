@@ -136,7 +136,7 @@ const TrackingParcel = () => {
                                         <div key={step._id || index} className="relative flex items-start mb-8 last:mb-0">
                                             {/* Connector Line */}
                                             {!isLast && (
-                                                <span className="absolute left-[88px] top-7 bottom-[-32px] w-[2px] bg-gray-200" />
+                                                <span className="absolute left-22 top-7 -bottom-8 w-0.5 bg-gray-200" />
                                             )}
 
                                             {/* Date and Time */}
@@ -146,7 +146,7 @@ const TrackingParcel = () => {
                                             </div>
 
                                             {/* Checkmark Icon Circle */}
-                                            <div className="relative z-10 flex-shrink-0 w-7 h-7 rounded-full bg-[#D1FADF] flex items-center justify-center">
+                                            <div className="relative z-10 shrink-0 w-7 h-7 rounded-full bg-[#D1FADF] flex items-center justify-center">
                                                 <svg className="w-4 h-4 text-[#12B76A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                                                 </svg>
